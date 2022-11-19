@@ -1,17 +1,10 @@
-import React, {useState, useEffect, useContext} from 'react'
-import { SocketContext } from '../context/socket';
+import React, {useState, useEffect} from 'react'
 
-const ChatBar = () => {
-    const socket = useContext(SocketContext);
+const ChatBar = ({socket}) => {
     const [users, setUsers] = useState([])
 
     useEffect(()=> {
         socket.on("newUserResponse", data => setUsers(data))
-
-        // 👇️ return a function to clean up the effect
-        return () => {
-            socket.off("newUserResponse")
-        }
     }, [socket, users])
 
   return (

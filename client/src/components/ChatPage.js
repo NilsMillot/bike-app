@@ -12,18 +12,10 @@ const ChatPage = () => {
 
   useEffect(()=> {
     socket.on("messageResponse", data => setMessages([...messages, data]))
-
-    return () => {
-      socket.off("messageResponse")
-    }
   }, [socket, messages])
 
   useEffect(()=> {
     socket.on("typingResponse", data => setTypingStatus(data))
-
-    return () => {
-      socket.off("typingResponse")
-    }
   }, [socket])
 
   useEffect(() => {
@@ -33,10 +25,10 @@ const ChatPage = () => {
 
   return (
     <div className="chat">
-      <ChatBar />
+      <ChatBar socket={socket}/>
       <div className='chat__main'>
-        <ChatBody messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} />
-        <ChatFooter />
+        <ChatBody messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} socket={socket}/>
+        <ChatFooter socket={socket}/>
       </div>
     </div>
   )

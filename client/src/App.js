@@ -6,7 +6,7 @@ import { socket, SocketContext } from "./context/socket";
 
 // Print erros if there is some
 socket.on("connect_error", (err) => {
-  console.log(err); // true
+  console.log(err instanceof Error); // true
 });
 
 function App() {
