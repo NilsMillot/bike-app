@@ -1,63 +1,65 @@
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-const app = express();
-
-// Add mysql database connection
-const db = mysql.createPool({
-  host: 'mysql_db', // the host name MYSQL_DATABASE: node_mysql
-  user: 'MYSQL_USER', // database user MYSQL_USER: MYSQL_USER
-  password: 'MYSQL_PASSWORD', // database user password MYSQL_PASSWORD: MYSQL_PASSWORD
-  database: 'books' // database name MYSQL_HOST_IP: mysql_db
-})
-
-// Enable cors security headers
-app.use(cors())
-
-// add an express method to parse the POST method
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
-
-// home page
-app.get('/', (req, res) => {
-  res.send('Hi There')
+const express = require("express")
+const app = express()
+const cors = require("cors")
+const http = require('http').Server(app);
+const PORT = 4000
+const socketIO = require('socket.io')(http, {
+    cors: {
+        // allow requests from client servered by nginx
+        origin: "http://localhost:3000"
+    }
 });
 
-// get all of the books in the database
-app.get('/get', (req, res) => {
-  const SelectQuery = " SELECT * FROM  books_reviews";
-  db.query(SelectQuery, (err, result) => {
-    res.send(result)
-  })
-})
+app.use(cors())
+let users = []
 
-// add a book to the database
-app.post("/insert", (req, res) => {
-  const bookName = req.body.setBookName;
-  const bookReview = req.body.setReview;
-  const InsertQuery = "INSERT INTO books_reviews (book_name, book_review) VALUES (?, ?)";
-  db.query(InsertQuery, [bookName, bookReview], (err, result) => {
-    console.log(result)
-  })
+socketIO.use(function(socket, next){
+  // if (socket.handshake.query.userName){
+    // if we finally use jwt, we can use this code
+    // jwt.verify(socket.handshake.query.token, 'SECRET_KEY', function(err, decoded) {
+      // if (err) return next(new Error('Authentication error'));
+      // socket.decoded = decoded;
+      next();
+    // });
+  // }
+  // else {
+    // next(new Error('Authentication error'));
+  // }   
 })
+socketIO.on('connection', (socket) => { 
+    // Connection now authenticated to receive further events
+    console.log(`⚡: ${socket.id} user just connected!`)  
+    socket.on("message", data => {
+      socketIO.emit("messageResponse", data)
+    })
 
-// delete a book from the database
-app.delete("/delete/:bookId", (req, res) => {
-  const bookId = req.params.bookId;
-  const DeleteQuery = "DELETE FROM books_reviews WHERE id = ?";
-  db.query(DeleteQuery, bookId, (err, result) => {
-    if (err) console.log(err);
-  })
-})
+    socket.on("calcul", data => {
+      const result = parseInt(data.num1) + parseInt(data.num2)
+      socketIO.emit("calculResponse", {result, number1: data.num1, number2: data.num2})
+    })
 
-// update a book review
-app.put("/update/:bookId", (req, res) => {
-  const bookReview = req.body.reviewUpdate;
-  const bookId = req.params.bookId;
-  const UpdateQuery = "UPDATE books_reviews SET book_review = ? WHERE id = ?";
-  db.query(UpdateQuery, [bookReview, bookId], (err, result) => {
-    if (err) console.log(err)
-  })
-})
+    socket.on("typing", data => (
+      socket.broadcast.emit("typingResponse", data)
+    ))
 
-app.listen('3001', () => { })
+    socket.on("newUser", data => {
+      users.push(data)
+      socketIO.emit("newUserResponse", users)
+    })
+ 
+    socket.on('disconnect', () => {
+      console.log('🔥: A user disconnected');
+      users = users.filter(user => user.socketID !== socket.id)
+      socketIO.emit("newUserResponse", users)
+      socket.disconnect()
+    });
+});
+
+app.get("/api", (req, res) => {
+  res.json({message: "Hello"})
+});
+
+   
+http.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+});
