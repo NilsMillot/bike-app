@@ -1,7 +1,10 @@
-Run `npm i` inside the client directory
+## Comment Lancer l'app
+<br>
 
-Run `npm i` inside the server directory
+### A la racine du projet
 
-Run `docker-compose build --pull --no-cache && docker-compose up` inside the main project directory
+```sh
+docker-compose build --pull --no-cache && docker-compose up
+```
 
-To start interacting with the application, open `http://localhost:3050/` on a browser.
+Puis, accédez à l'url `http://localhost:3000/` depuis votre navigateur.
