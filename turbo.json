@@ -1,0 +1,17 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "pipeline": {
+      "install": {
+        "outputs": []
+      },
+      "build": {
+        "outputs": ["build/**"]
+      },
+      "start": {
+        "outputs": []
+      },
+      "lint": {
+        "outputs": []
+      }
+    }
+  }
