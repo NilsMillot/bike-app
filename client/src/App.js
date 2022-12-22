@@ -21,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/chat" element={<ChatPage />}></Route>
+          <Route path="/login" component={Login} />
           <Route path="/calcul" element={<CalculPage />}></Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
