@@ -3,9 +3,10 @@ WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
 COPY ./ ./
-# RUN npm i
-# RUN chown -R node /app/node_modules
-RUN mkdir /app/node_modules/.cache \
-    && chown -R node:node /app/node_modules/.cache
+RUN npm i
+# RUN mkdir node_modules/.cache \
+#     && chmod -R 777 node_modules/.cache \
+#     && chown -R node node_modules
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 USER node
 CMD ["npm", "run", "start"]

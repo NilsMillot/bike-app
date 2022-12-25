@@ -18,12 +18,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAyQ0tN-k1a5fxUrMOyC4mWyTFKdRoE_SY",
-    authDomain: "bike-app-71394.firebaseapp.com",
-    projectId: "bike-app-71394",
-    storageBucket: "bike-app-71394.appspot.com",
-    messagingSenderId: "915056114088",
-    appId: "1:915056114088:web:b276bd8ec05540402e059d"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID
   };
 
 const app = initializeApp(firebaseConfig);
@@ -73,6 +73,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     alert(err.message);
   }
 };
+
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);

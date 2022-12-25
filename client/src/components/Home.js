@@ -1,6 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
+import { useAuthState } from "react-firebase-hooks/auth";
 import {useNavigate} from "react-router-dom"
 import { SocketContext } from '../context/socket'
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const Home = () => {
     const navigate = useNavigate()
@@ -8,6 +11,8 @@ const Home = () => {
     const [isButtonCallSalesConsultantDisabled, setIsButtonCallSalesConsultantDisabled] = useState(true)
     const [isButtonOpenChatDisabled, setIsButtonOpenChatDisabled] = useState(true)
     const socket = useContext(SocketContext);
+    const [user, loading, error] = useAuthState(auth);
+    const [name, setName] = useState("");
 
     const handleSubmitOpenChat = (e) => {
         e.preventDefault()
@@ -25,6 +30,18 @@ const Home = () => {
         navigate("/seller")
     }
 
+    const fetchUserName = async () => {
+      try {
+        const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+        const doc = await getDocs(q);
+        const data = doc.docs[0].data();
+        setName(data.name);
+      } catch (err) {
+        console.error(err);
+        alert("An error occured while fetching user data");
+      }
+    };
+
     useEffect(() => {
       if(userName.length > 5) {
         setIsButtonOpenChatDisabled(false)
@@ -32,6 +49,12 @@ const Home = () => {
         setIsButtonOpenChatDisabled(true)
       }
     }, [userName])
+
+    useEffect(() => {
+      if (loading) return;
+      if (!user) return navigate("/login");
+      fetchUserName();
+    }, [user, loading]);
 
   return (
     <div className="home__container">
