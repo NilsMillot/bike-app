@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, signInWithGoogle } from "../firebase";
-import {
-    GoogleAuthProvider,
-    getAuth,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-    signOut,
-  } from "firebase/auth";
+import { auth, signInWithGoogle, logInWithEmailAndPassword } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "../index.css";
 
@@ -28,7 +19,6 @@ function Login() {
   return (
     <div className="login">
       <div className="login__container">
-      <input type="text" defaultValue={process.env.apiKey} />
         <input
           type="text"
           className="login__textBox"
@@ -45,7 +35,7 @@ function Login() {
         />
         <button
           className="login__btn"
-          onClick={() => signInWithEmailAndPassword(email, password)}
+          onClick={() => logInWithEmailAndPassword(email, password)}
         >
           Login
         </button>

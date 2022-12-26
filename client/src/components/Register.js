@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   auth,
   registerWithEmailAndPassword,
@@ -23,12 +23,8 @@ function Register() {
   };
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/");
+    if (user) return navigate("/");
   }, [user, loading]);
-  /* useEffect(() => {
-    if (loading) return;
-    if (user) redirect("/")//history.replace("/");
-  }, [user, loading]); */
   
   //affichage
   return (

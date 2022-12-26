@@ -14,9 +14,9 @@ socket.on("connect_error", (err) => {
 });
 
 function App() {
-  console.log(process.env.REACT_APP_API_KEY);
-  return (
 
+  return (
+    
       <>
         <Navbar/> 
         <SocketContext.Provider value={socket}>
