@@ -3,12 +3,15 @@ const app = express()
 const cors = require("cors")
 const http = require('http').Server(app);
 const PORT = 4000
+const SecurityRouter = require("./routes/Security");
 const socketIO = require('socket.io')(http, {
     cors: {
         // allow requests from client servered by nginx
         origin: "http://localhost:3000"
     }
 });
+const checkAuthentication = require("./middlewares/checkAuthentication");
+const UserRouter = require("./routes/User");
 
 app.use(cors())
 let users = []
@@ -63,3 +66,9 @@ app.get("/api", (req, res) => {
 http.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
+
+
+
+
+app.use(SecurityRouter);
+app.use("/users", checkAuthentication, UserRouter);

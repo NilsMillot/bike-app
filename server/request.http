@@ -1,0 +1,66 @@
+GET http://localhost:4000/api
+Accept: application/json
+
+### Create user
+POST http://localhost:4000/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RuYW1lIjoiT0siLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTgzMzgzNDMsImV4cCI6MTY4OTg5NTk0M30.jqZAYEZ8X8gYT_WVz6nnJKZD4COl745_a_qOp_ZzkTs
+
+{
+    "email": "ok@ok.com",
+    "password": "OKOKOK",
+    "firstname": "OK"
+}
+
+### Update user
+PUT http://localhost:4000/users/2
+Content-Type: application/json
+
+{
+    "firstname": "O"
+}
+
+### Get all users
+GET http://localhost:4000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3RuYW1lIjoiT0siLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTg1NzY2MjksImV4cCI6MTY5MDEzNDIyOX0.8H0__INWGv5R-MJmZOa46AePoQQQMUrSPxxSdPlqPL0
+
+### Get one user
+GET http://localhost:4000/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RuYW1lIjoiT0siLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTgzMzgzNDMsImV4cCI6MTY4OTg5NTk0M30.jqZAYEZ8X8gYT_WVz6nnJKZD4COl745_a_qOp_ZzkTs
+
+### Get me
+GET http://localhost:4000/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RuYW1lIjoiT0siLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTgzMzgzNDMsImV4cCI6MTY4OTg5NTk0M30.jqZAYEZ8X8gYT_WVz6nnJKZD4COl745_a_qOp_ZzkTs
+
+### Delete user
+DELETE http://localhost:4000/users/3
+
+### 
+POST http://localhost:4000/register
+Content-Type: application/json
+
+{
+    "email": "abc@ok.com",
+    "password": "OKOKOK",
+    "firstname": "OK",
+    "isAdmin": true,
+    "confirmationCode": "5555555"
+}
+
+###
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+    "email": "max@max.fr",
+    "password": "password"
+}
+
+###
+POST http://localhost:4000/checkToken
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RuYW1lIjoiT0siLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NTg1MDY1MzUsImV4cCI6MTY5MDA2NDEzNX0.DQuU4KAjp5VNVoBNkQfhmJneVS0x848EtLvqnEBg5i8"
+}
+
