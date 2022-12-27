@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {useNavigate} from "react-router-dom"
+import { SocketContext } from '../context/socket';
 
 const ChatBody = ({messages, typingStatus, lastMessageRef}) => { 
   const navigate = useNavigate()
