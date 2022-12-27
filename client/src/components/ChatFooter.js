@@ -2,18 +2,18 @@ import React, {useState} from 'react'
 
 const ChatFooter = ({socket}) => {
     const [message, setMessage] = useState("")
-    const handleTyping = () => socket.emit("typing",`${localStorage.getItem("userName")} écrit un message...`)
+    const handleTyping = () => socket.emit("typing",`${localStorage.getItem("username")} écrit un message...`)
 
     const handleSendMessage = (e) => {
         e.preventDefault()
-        if (!localStorage.getItem("userName")) {
+        if (!localStorage.getItem("username")) {
           alert('Qui est tu? Quittes ce chat et entre un nom d\'utilisateur');
         }
-        if(message.trim() && localStorage.getItem("userName")) {
+        if(message.trim() && localStorage.getItem("username")) {
         socket.emit("message", 
             {
             text: message, 
-            name: localStorage.getItem("userName"), 
+            name: localStorage.getItem("username"), 
             id: `${socket.id}${Math.random()}`,
             socketID: socket.id
             }

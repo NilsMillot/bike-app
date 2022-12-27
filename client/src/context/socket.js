@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import socketio from "socket.io-client";
 
-const userName = localStorage;
+const { username } = localStorage;
 
-// Users can be anonymous or "logged in" (have set a username in localstorage)
 // TODO: store this url in a .env file
-export const socket = userName ? socketio.connect("ws://localhost:4000", {
-  query: {userName},
+export const socket = username ? socketio.connect("ws://localhost:4000", {
+  query: {username},
   transports: ['websocket']
 }) : socketio.connect("ws://localhost:4000")
+
 export const SocketContext = createContext();

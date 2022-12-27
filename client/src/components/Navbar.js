@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "../img/logo192.png";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
@@ -49,20 +49,18 @@ function NavbarApp() {
               alt="logo"
             />
           </Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/chat">Home</Nav.Link>
-          </Nav>
-          {loggedIn ? (
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                Signed in as: {name}
-              </Navbar.Text>
-              <Button className="dashboard__btn" onClick={logout}>Logout</Button>
-            </Navbar.Collapse>
-          ) : (
-            <Navbar.Collapse className="justify-content-end">
-              <Nav.Link href="/login">Home</Nav.Link>
-            </Navbar.Collapse>
+          {loggedIn && (
+            <Fragment>
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+              </Nav>
+              <Navbar.Collapse className="justify-content-end">
+                <Navbar.Text>
+                  Signed in as: {name}
+                </Navbar.Text>
+                <Button className="dashboard__btn" onClick={logout}>Logout</Button>
+              </Navbar.Collapse>
+            </Fragment>
           )}
         </Container>
       </Navbar>

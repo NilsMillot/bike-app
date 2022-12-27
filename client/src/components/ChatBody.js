@@ -1,13 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {useNavigate} from "react-router-dom"
-import { SocketContext } from '../context/socket';
 
 const ChatBody = ({messages, typingStatus, lastMessageRef}) => { 
   const navigate = useNavigate()
   const handleLeaveChat = () => {
-    localStorage.removeItem("userName")
     navigate("/")
-    window.location.reload()
   }
   
   return (
@@ -20,7 +17,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef}) => {
 
         <div className='message__container'>
           {messages.map(message => (
-            message.name === localStorage.getItem("userName") ? (
+            message.name === localStorage.getItem("username") ? (
               <div className="message__chats" key={message.id}>
             <p className='sender__name'>Moi ({message.name})</p>
             <div className='message__sender'>
