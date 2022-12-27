@@ -8,12 +8,12 @@ import {
 } from "../firebase";
 import "../index.css";
 
-function Register() {
+function RegisterPage() {
   // state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   
   //comportement
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Register() {
   useEffect(() => {
     if (loading) return;
     if (user) return navigate("/");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
   
   //affichage
   return (
@@ -67,4 +67,4 @@ function Register() {
     </div>
   );
 }
-export default Register;
+export default RegisterPage;

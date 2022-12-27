@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef, useContext, useCallback} from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SocketContext } from '../context/socket'
 import ChatBar from './ChatBar'
 import ChatBody from './ChatBody'
 import ChatFooter from './ChatFooter'
-import { query, collection, getDocs, where } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import {useNavigate} from "react-router-dom"
 
 
@@ -16,25 +15,11 @@ const ChatPage = () => {
   const socket = useContext(SocketContext);
   const navigate = useNavigate()
   const [user, loading] = useAuthState(auth);
-  const [name, setName] = useState("");
-
-  const fetchUsername = useCallback(async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
-  }, [user]);
 
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
-    fetchUsername();
-  }, [user, loading, fetchUsername, navigate]);
+  }, [user, loading, navigate]);
 
   useEffect(()=> {
     socket.on("messageResponse", data => setMessages([...messages, data]))

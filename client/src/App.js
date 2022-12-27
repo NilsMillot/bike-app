@@ -1,13 +1,14 @@
 import { Fragment } from "react";
 import { Routes, Route} from "react-router-dom"
-import Home from "./components/Home"
+import HomePage from "./components/HomePage"
 import ChatPage from "./components/ChatPage";
-import Login from "./components/Login";
-import Reset from "./components/Reset";
-import Dashboard from "./components/Dashboard";
-import Register from "./components/Register";
+import LoginPage from "./components/LoginPage";
+import ResetPage from "./components/ResetPage";
+import DashboardPage from "./components/DashboardPage";
+import RegisterPage from "./components/RegisterPage";
 import Navbar from "./components/Navbar";
 import { socket, SocketContext } from "./context/socket";
+import AdminPage from "./components/AdminPage";
 
 // Print errors if there is some
 socket.on("connect_error", (err) => {
@@ -21,12 +22,13 @@ function App() {
         <Navbar/> 
         <SocketContext.Provider value={socket}>
           <Routes>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/register" element={<Register/>}/>
-              <Route path="/reset" element={<Reset/>}/>
-              <Route path="/" element={<Home />}/>
+              <Route path="/login" element={<LoginPage />}/>
+              <Route path="/register" element={<RegisterPage />}/>
+              <Route path="/reset" element={<ResetPage />}/>
+              <Route path="/" element={<HomePage />}/>
               <Route path="/chat" element={<ChatPage />}/>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </SocketContext.Provider>
       </Fragment>
