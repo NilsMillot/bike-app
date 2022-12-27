@@ -1,3 +1,10 @@
-Same project, without docker
+## Comment Lancer l'app
+<br>
 
-npm install in client/ and server/ then npm start
+### A la racine du projet
+
+```sh
+docker-compose build --pull --no-cache && docker-compose up
+```
+
+Puis, accédez à l'url `http://localhost:3000/` depuis votre navigateur.
