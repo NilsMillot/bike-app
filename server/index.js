@@ -5,7 +5,6 @@ const http = require('http').Server(app);
 const PORT = 4000
 const socketIO = require('socket.io')(http, {
     cors: {
-        // allow requests from client servered by nginx
         origin: "http://localhost:3000"
     }
 });

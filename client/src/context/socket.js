@@ -8,4 +8,5 @@ const userName = localStorage;
 export const socket = userName ? socketio.connect("http://localhost:4000", {
   query: {userName}
 }) : socketio.connect("http://localhost:4000")
+
 export const SocketContext = createContext();

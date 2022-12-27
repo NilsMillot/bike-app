@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Routes, Route} from "react-router-dom"
 import Home from "./components/Home"
 import ChatPage from "./components/ChatPage";
@@ -8,7 +9,7 @@ import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import { socket, SocketContext } from "./context/socket";
 
-// Print erros if there is some
+// Print errors if there is some
 socket.on("connect_error", (err) => {
   console.log(err instanceof Error); // true
 });
@@ -16,8 +17,7 @@ socket.on("connect_error", (err) => {
 function App() {
 
   return (
-    
-      <>
+      <Fragment>
         <Navbar/> 
         <SocketContext.Provider value={socket}>
           <Routes>
@@ -29,10 +29,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </SocketContext.Provider>
-      </>
-    
- 
-   
+      </Fragment>
   );
 }
 

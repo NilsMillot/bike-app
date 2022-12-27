@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext} from 'react'
+import React, { useEffect, useState, useRef, useContext, useCallback} from 'react'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { SocketContext } from '../context/socket'
 import ChatBar from './ChatBar'
@@ -15,10 +15,10 @@ const ChatPage = () => {
   const lastMessageRef = useRef(null);
   const socket = useContext(SocketContext);
   const navigate = useNavigate()
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
 
-  const fetchUserName = async () => {
+  const fetchUsername = useCallback(async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
@@ -28,13 +28,13 @@ const ChatPage = () => {
       console.error(err);
       alert("An error occured while fetching user data");
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
-    fetchUserName();
-  }, [user, loading]);
+    fetchUsername();
+  }, [user, loading, fetchUsername, navigate]);
 
   useEffect(()=> {
     socket.on("messageResponse", data => setMessages([...messages, data]))
