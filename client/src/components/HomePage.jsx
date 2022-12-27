@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import { useAuthState } from "react-firebase-hooks/auth";
 import {useNavigate} from "react-router-dom"
 import { SocketContext } from '../context/socket'
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
-const Home = () => {
+const HomePage = () => {
     const navigate = useNavigate()
     const [isButtonCallSalesConsultantDisabled, setIsButtonCallSalesConsultantDisabled] = useState(true)
     const socket = useContext(SocketContext);
@@ -26,7 +26,7 @@ const Home = () => {
         navigate("/seller")
     }
 
-    const fetchUserName = async () => {
+    const fetchUsername = useCallback(async() => {
       try {
         const q = query(collection(db, "users"), where("uid", "==", user?.uid));
         const doc = await getDocs(q);
@@ -36,13 +36,13 @@ const Home = () => {
         console.error(err);
         alert("An error occured while fetching user data");
       }
-    };
+    }, [user])
 
     useEffect(() => {
       if (loading) return;
       if (!user) return navigate("/login");
-      fetchUserName();
-    }, [user, loading]);
+      fetchUsername();
+    }, [user, loading, fetchUsername, navigate]);
 
   return (
     <div className="home__container">
@@ -54,4 +54,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

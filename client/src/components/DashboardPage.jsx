@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 
-function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
+function DashboardPage() {
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  const fetchUserName = async () => {
+
+  const fetchUsername = useCallback(async() => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
@@ -19,12 +20,14 @@ function Dashboard() {
       console.error(err);
       alert("An error occured while fetching user data");
     }
-  };
+  }, [user])
+  
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
-    fetchUserName();
-  }, [user, loading]);
+    fetchUsername();
+  }, [user, loading, fetchUsername, navigate]);
+
   return (
     <div className="dashboard">
        <div className="dashboard__container">
@@ -38,4 +41,4 @@ function Dashboard() {
      </div>
   );
 }
-export default Dashboard;
+export default DashboardPage;

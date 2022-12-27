@@ -4,18 +4,20 @@ import { auth, signInWithGoogle, logInWithEmailAndPassword } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "../index.css";
 
-function Login() {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (loading) {
       // maybe trigger a loading screen
       return;
     }
     if (user) navigate("/");
-  }, [user, loading]);
+  }, [user, loading, navigate]);
+
   return (
     <div className="login">
       <div className="login__container">
@@ -52,4 +54,4 @@ function Login() {
     </div>
   );
 }
-export default Login;
+export default LoginPage;
