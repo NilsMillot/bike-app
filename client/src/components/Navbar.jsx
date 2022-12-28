@@ -1,14 +1,14 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../img/logo192.png";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 function NavbarApp() {
   const [user, loading] = useAuthState(auth);
@@ -16,7 +16,7 @@ function NavbarApp() {
   const [roles, setRoles] = useState([]);
   const navigate = useNavigate();
 
-  const fetchUsername = useCallback(async() => {
+  const fetchUsername = useCallback(async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
@@ -27,12 +27,12 @@ function NavbarApp() {
       console.error(err);
       alert("An error occured while fetching user data");
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (loading) return;
     if (!user) {
-      return navigate("/login")
+      return navigate("/login");
     }
     fetchUsername();
   }, [user, loading, fetchUsername, navigate]);
@@ -42,7 +42,7 @@ function NavbarApp() {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="/">
-          <img
+            <img
               src={logo}
               width="30"
               height="30"
@@ -55,17 +55,21 @@ function NavbarApp() {
               <Nav className="me-auto">
                 <Nav.Link href="/">Home</Nav.Link>
               </Nav>
-              {roles?.includes('admin') && <Nav className="me-auto">
-                <Nav.Link href="/admin">Admin</Nav.Link>
-              </Nav>}
-              {roles?.includes('seller') && <Nav className="me-auto">
-                <Nav.Link href="/seller">Seller</Nav.Link>
-              </Nav>}
+              {roles?.includes("admin") && (
+                <Nav className="me-auto">
+                  <Nav.Link href="/admin">Admin</Nav.Link>
+                </Nav>
+              )}
+              {roles?.includes("seller") && (
+                <Nav className="me-auto">
+                  <Nav.Link href="/seller">Seller</Nav.Link>
+                </Nav>
+              )}
               <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                  Signed in as: {name}
-                </Navbar.Text>
-                <Button className="dashboard__btn" onClick={logout}>Logout</Button>
+                <Navbar.Text>Signed in as: {name}</Navbar.Text>
+                <Button className="dashboard__btn" onClick={logout}>
+                  Logout
+                </Button>
               </Navbar.Collapse>
             </Fragment>
           )}

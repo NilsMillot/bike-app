@@ -14,7 +14,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [user, loading] = useAuthState(auth);
-  
+
   //comportement
   const navigate = useNavigate();
   const register = () => {
@@ -25,7 +25,7 @@ function RegisterPage() {
     if (loading) return;
     if (user) return navigate("/");
   }, [user, loading, navigate]);
-  
+
   //affichage
   return (
     <div className="register">

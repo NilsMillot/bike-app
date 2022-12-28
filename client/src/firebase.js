@@ -18,13 +18,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID
-  };
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -45,7 +45,7 @@ const signInWithGoogle = async () => {
         email: user.email,
       });
     }
-    localStorage.setItem("username", user.displayName)
+    localStorage.setItem("username", user.displayName);
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -56,10 +56,13 @@ const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     try {
-      const q = query(collection(db, "users"), where("uid", "==", auth.currentUser.uid));
+      const q = query(
+        collection(db, "users"),
+        where("uid", "==", auth.currentUser.uid)
+      );
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
-      localStorage.setItem("username", data.name)
+      localStorage.setItem("username", data.name);
     } catch (err) {
       console.error(err);
       alert("An error occured while fetching user data");
@@ -80,7 +83,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: "local",
       email,
     });
-    localStorage.setItem("username", name)
+    localStorage.setItem("username", name);
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -98,7 +101,7 @@ const sendPasswordReset = async (email) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("username")
+  localStorage.removeItem("username");
   signOut(auth);
 };
 
