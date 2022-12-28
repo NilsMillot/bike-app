@@ -1,14 +1,14 @@
 import { Fragment } from "react";
 import { Routes, Route} from "react-router-dom"
-import HomePage from "./components/HomePage"
-import ChatPage from "./components/ChatPage";
-import LoginPage from "./components/LoginPage";
-import ResetPage from "./components/ResetPage";
-import DashboardPage from "./components/DashboardPage";
-import RegisterPage from "./components/RegisterPage";
-import Navbar from "./components/Navbar";
-import { socket, SocketContext } from "./context/socket";
-import AdminPage from "./components/AdminPage";
+import HomePage from "./HomePage.jsx";
+import ChatPage from "./ChatPage";
+import LoginPage from "./LoginPage";
+import ResetPage from "./ResetPage";
+import DashboardPage from "./DashboardPage";
+import RegisterPage from "./RegisterPage";
+import Navbar from "./Navbar";
+import { socket, SocketContext } from "../context/socket";
+import AdminPage from "./AdminPage";
 
 // Print errors if there is some
 socket.on("connect_error", (err) => {
