@@ -9,6 +9,7 @@ import RegisterPage from "./components/RegisterPage";
 import Navbar from "./components/Navbar";
 import { socket, SocketContext } from "./context/socket";
 import AdminPage from "./components/AdminPage";
+import SellerPage from "./components/SellerPage";
 
 // Print errors if there is some
 socket.on("connect_error", (err) => {
@@ -29,6 +30,7 @@ function App() {
               <Route path="/chat" element={<ChatPage />}/>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/seller" element={<SellerPage />} />
           </Routes>
         </SocketContext.Provider>
       </Fragment>

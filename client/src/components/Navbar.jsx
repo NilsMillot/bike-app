@@ -58,6 +58,9 @@ function NavbarApp() {
               {roles?.includes('admin') && <Nav className="me-auto">
                 <Nav.Link href="/admin">Admin</Nav.Link>
               </Nav>}
+              {roles?.includes('seller') && <Nav className="me-auto">
+                <Nav.Link href="/seller">Seller</Nav.Link>
+              </Nav>}
               <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
                   Signed in as: {name}
