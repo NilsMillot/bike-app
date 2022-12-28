@@ -24,6 +24,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.6.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "socket.io-client": "^4.5.4",
     "stream": "^0.0.2",
     "util": "^0.12.5",

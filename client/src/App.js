@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import { socket, SocketContext } from "./context/socket";
 import AdminPage from "./components/AdminPage";
 import SellerPage from "./components/SellerPage";
+import Notification from "./components/Notification";
 
 // Print errors if there is some
 socket.on("connect_error", (err) => {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/seller" element={<SellerPage />} />
           </Routes>
         </SocketContext.Provider>
+        <Notification />
       </Fragment>
   );
 }

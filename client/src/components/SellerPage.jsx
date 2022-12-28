@@ -9,6 +9,7 @@ const SellerPage = () => {
   const [user, loading] = useAuthState(auth);
   const [currentUserRoles, setCurrentUserRoles] = useState([]);
   const [isCurrentUserFetched, setIsCurrentUserFetched] = useState(false);
+  const [commercialInfo, setCommercialInfo] = useState("");
 
   const fetchCurrentUserDatas = useCallback(async () => {
     try {
@@ -22,6 +23,20 @@ const SellerPage = () => {
       alert("An error occured while fetching user data");
     }
   }, [user]);
+
+  const sendCommerCialInfo = () => {
+    const requestBody = { message: commercialInfo }
+
+    fetch('http://localhost:4000/api/send-notif', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+
+    setCommercialInfo("");
+  }
 
   // If user is not authenticated by firebase, redirect to login page
   useEffect(() => {
@@ -48,8 +63,8 @@ const SellerPage = () => {
       <div className="home__container">
         <h1>Panel seller</h1>
         <section>
-          <input type="text" />
-          <button type="submit">Send</button>
+          <input type="text" value={commercialInfo} onChange={(e) => setCommercialInfo(e.target.value)} />
+          <button type="submit" onClick={sendCommerCialInfo}>Send</button>
         </section>
         <p>Here you can add your commercial information</p>
       </div>

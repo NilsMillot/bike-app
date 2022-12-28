@@ -4,11 +4,15 @@ const cors = require("cors")
 const http = require('http').Server(app);
 const PORT = 4000
 const socketIO = require('socket.io')(http, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
+  cors: {
+    origin: "http://localhost:3000"
+  }
 });
+const {EventEmitter} = require('events');
 
+const eventEmitter = new EventEmitter();
+
+app.use(express.json())
 app.use(cors())
 let users = []
 
@@ -58,7 +62,23 @@ app.get("/api", (req, res) => {
   res.json({message: "Hello"})
 });
 
-   
+app.get("/api/notif-stream", (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Content-Type', 'text/event-stream');
+
+  eventEmitter.on("notif", (data) => {
+    res.write('data: ' + JSON.stringify(data) + ' \n\n');
+  })
+})
+
+app.post("/api/send-notif", (req, res) => {
+  console.log(req.body);
+  const message = req.body.message;
+  eventEmitter.emit("notif", {message});
+  res.json({message: "Notification sent!"})
+})
+
+
 http.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
