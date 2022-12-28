@@ -11,7 +11,7 @@ const AdminPage = () => {
     const [isCurrentUserDatasFetched, setIsCurrentUserDatasFetched] = useState(false);
     const [allUsers, setAllUsers] = useState([]);
     const [allRooms, setAllRooms] = useState([]);
-    // const [shouldModify, setShouldModify] = useState(false);
+    
     const [newRoom, setNewRoom] = useState({
       name: '',
       maxUsers: 0,
@@ -39,9 +39,7 @@ const AdminPage = () => {
       try {
         const q = query(collection(db, "users"));
         const doc = await getDocs(q);
-        doc.forEach((doc) => {
-          setAllUsers(prev => [...prev, doc.data()])
-        });
+        setAllUsers(doc.docs.map((doc) => doc.data()));
       } catch (err) {
         console.error(err);
         alert("An error occured while fetching user data");
@@ -53,9 +51,7 @@ const AdminPage = () => {
       try {
         const q = query(collection(db, "rooms"));
         const doc = await getDocs(q);
-        doc.forEach((doc) => {
-          setAllRooms(prev => [...prev, doc.data()])
-        });
+        setAllRooms(doc.docs.map((doc) => doc.data()));
       } catch (err) {
         console.error(err);
         alert("An error occured while fetching user data");
@@ -114,11 +110,6 @@ const AdminPage = () => {
         if (docFetched.docs.length > 0) {
           alert("Room already exists");
         } else {
-          // OK but id with room name isn't good idea
-          // await setDoc(doc(db, "rooms", newRoom.name), {
-          //   name: newRoom.name,
-          //   maxUsers: newRoom.maxUsers,
-          // });
           await addDoc(collection(db, "rooms"), {
             name: newRoom.name,
             maxUsers: newRoom.maxUsers,

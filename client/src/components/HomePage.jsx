@@ -12,12 +12,23 @@ const HomePage = () => {
     const [user, loading] = useAuthState(auth);
     const [username, setUsername] = useState("")
 
+    // Get all rooms available from firebase
+    const [allRooms, setAllRooms] = useState([])
+    const fetchAllRooms = useCallback(async () => {
+      try {
+        const q = query(collection(db, "rooms"));
+        const doc = await getDocs(q);
+        setAllRooms(doc.docs.map((doc) => doc.data()))
+      } catch (err) {
+        console.error(err);
+        alert("An error occured while fetching user data");
+      }
+    }, []);
+
     const handleSubmitOpenChat = (e) => {
         e.preventDefault()
-        
           socket.emit("newUser", {username, socketID: socket.id})
           navigate("/chat")
-        
     }
 
     const handleSubmitAskSeller = (e) => {
@@ -42,11 +53,20 @@ const HomePage = () => {
       if (loading) return;
       if (!user) return navigate("/login");
       fetchUsername();
-    }, [user, loading, fetchUsername, navigate]);
+      fetchAllRooms();
+    }, [user, loading, fetchUsername, navigate, fetchAllRooms]);
 
   return (
     <div className="home__container">
       <div>
+        <h1>Liste des salons ouverts</h1>
+        <ul className={'list_rooms'}>
+          {allRooms.map((room, index) => (
+            <li key={index}>
+              <button className={'home__cta'} onClick={() => console.log('join', room.name)} style={{marginRight: '10px'}}>{room.name}</button>
+            </li>
+          ))}
+        </ul>
         <button className={'home__cta'} onClick={handleSubmitOpenChat} style={{marginRight: '10px'}}>CHAT OUVERT</button>
         <button className={isButtonCallSalesConsultantDisabled ? 'home__cta__disabled' : 'home__cta'} disabled={isButtonCallSalesConsultantDisabled} onClick={handleSubmitAskSeller}>DEMANDE CONSEILLER</button>
       </div>
