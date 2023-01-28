@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const ChatBar = ({ socket }) => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    socket.on("newUserResponse", (data) => setUsers(data));
-  }, [socket, users]);
-
+const ChatBar = ({ roomData }) => {
   return (
     <div className="chat__sidebar">
-      <h2>Chat ouvert</h2>
+      <h2>{roomData?.room}</h2>
       <div>
         <h4 className="chat__header">Membres présents ici</h4>
         <div className="chat__users">
-          {users.map((user) => (
-            <p key={user.socketID}>{user.userName}</p>
+          {roomData?.users?.map((user) => (
+            <p key={user.id}>{user.name}</p>
           ))}
         </div>
       </div>

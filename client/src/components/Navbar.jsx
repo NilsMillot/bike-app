@@ -5,16 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../img/logo192.png";
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Button from "react-bootstrap/Button";
 
 function NavbarApp() {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [name, setName] = useState("");
   const [roles, setRoles] = useState([]);
-  const navigate = useNavigate();
 
   const fetchUsername = useCallback(async () => {
     try {
@@ -30,12 +28,10 @@ function NavbarApp() {
   }, [user]);
 
   useEffect(() => {
-    if (loading) return;
-    if (!user) {
-      return navigate("/login");
+    if (user) {
+      fetchUsername();
     }
-    fetchUsername();
-  }, [user, loading, fetchUsername, navigate]);
+  }, [user, fetchUsername]);
 
   return (
     <>

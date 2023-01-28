@@ -26,13 +26,9 @@ const HomePage = () => {
       console.error(err);
       alert("An error occured while fetching user data");
     }
+    // todo: remove this line
+    setIsButtonCallSalesConsultantDisabled(true);
   }, []);
-
-  const handleSubmitOpenChat = (e) => {
-    e.preventDefault();
-    socket.emit("newUser", { username, socketID: socket.id });
-    navigate("/chat");
-  };
 
   const handleSubmitAskSeller = (e) => {
     e.preventDefault();
@@ -68,7 +64,9 @@ const HomePage = () => {
             <li key={index}>
               <button
                 className={"home__cta"}
-                onClick={() => console.log("join", room.name)}
+                onClick={() => {
+                  navigate("/chat?room=" + room.name);
+                }}
                 style={{ marginRight: "10px" }}
               >
                 {room.name}
@@ -76,13 +74,6 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
-        <button
-          className={"home__cta"}
-          onClick={handleSubmitOpenChat}
-          style={{ marginRight: "10px" }}
-        >
-          CHAT OUVERT
-        </button>
         <button
           className={
             isButtonCallSalesConsultantDisabled
