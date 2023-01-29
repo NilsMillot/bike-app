@@ -45,32 +45,53 @@ const ChatPage = () => {
   const fetchRooms = async () => {
     const q = query(collection(db, "rooms"));
     const querySnapshot = await getDocs(q);
+    let arr = [];
     querySnapshot.forEach((doc) => {
-      setAutorisedRooms((autorisedRooms) => [...autorisedRooms, doc.data()]);
+      arr.push(doc.data());
     });
+    setAutorisedRooms(arr);
+    return arr;
   };
 
   useEffect(() => {
+    let so = null;
     if (loading) return;
     if (name && room) {
-      const so = io("ws://localhost:4000");
+      so = io("ws://localhost:4000");
       setSocket(so);
 
-      // 👇 Join the room
-      so.emit("join", { name, room }, (error) => {
-        if (error) {
-          alert(error);
-        }
+      fetchRooms().then((data) => {
+        let maxUsers = 0;
+        data.forEach((autorisedroom) => {
+          if (autorisedroom.name === room) {
+            maxUsers = autorisedroom.maxUsers;
+          }
+        });
+        // 👇 Join the room
+        so.emit("join", { name, room, maxUsers }, (error) => {
+          if (error) {
+            if (error === "Too many users in this room") {
+              navigate("/");
+            }
+            alert(error);
+          }
+        });
+        // 👇 Get all users in this room
+        so.emit("getRoomConnections");
+        so.on("roomData", (data) => {
+          setCurrentRoomDataFromServer(data);
+        });
+        so.on("typingResponse", (data) => setTypingStatus(data));
       });
-      // 👇 Get all users in this room
-      so.emit("getRoomConnections");
-      so.on("roomData", (data) => {
-        setCurrentRoomDataFromServer(data);
-      });
-      so.on("typingResponse", (data) => setTypingStatus(data));
     }
-    fetchRooms();
-  }, [name, room, loading]);
+
+    // 👇️ Clean up
+    return () => {
+      if (so) {
+        so.disconnect();
+      }
+    };
+  }, [name, room, loading, navigate]);
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <div>Not logged in</div>;

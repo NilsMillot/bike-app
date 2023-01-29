@@ -1,7 +1,10 @@
 let users = [];
 
-exports.addUser = ({ id, name, room }) => {
+exports.addUser = ({ id, name, room, maxUsers }) => {
   if (!name || !room) return { error: "Username and room are required." };
+  if (users.length >= maxUsers) {
+    return { error: "Too many users in this room" };
+  }
   const user = { id, name, room };
 
   users.push(user);

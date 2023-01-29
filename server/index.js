@@ -25,15 +25,15 @@ const { addUser, removeUser, usersArr } = require("./user");
 
 socketIO.on("connection", (socket) => {
   // TODO: Pass maxUsers from firebase here and check if there is too many users in the room
-  socket.on("join", ({ name, room }, callBack) => {
-    const { user, error } = addUser({ id: socket.id, name, room });
+  socket.on("join", ({ name, room, maxUsers }, callBack) => {
+    const { user, error } = addUser({ id: socket.id, name, room, maxUsers });
 
     if (error) return callBack(error);
 
     socket.join(user?.room);
     socket.emit("message", {
       user: "Bot",
-      text: `Bienvenu dans ${user?.room} ${user.name}!`,
+      text: `Bienvenu dans ${user?.room} ${user.name} limité à ${maxUsers} utilisateurs!`,
     });
 
     socket.broadcast
