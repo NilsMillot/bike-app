@@ -12,18 +12,10 @@ import SellerPage from "./components/Pages/SellerPage";
 import Notification from "./components/Notification";
 import HelpPage2 from "./components/Pages/HelpPage2";
 
-// IF WE WANT TO USE PROVIDER
-// import { socket, SocketContext } from "./context/socket";
-// Print errors if there is some
-// socket.on("connect_error", (err) => {
-//   console.log(err);
-// });
-
 function App() {
   return (
     <Fragment>
       <Navbar />
-      {/* <SocketContext.Provider value={socket}> */}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -35,7 +27,6 @@ function App() {
         <Route path="/seller" element={<SellerPage />} />
         <Route path="/help2" element={<HelpPage2 />} />
       </Routes>
-      {/* </SocketContext.Provider> */}
       <Notification />
     </Fragment>
   );

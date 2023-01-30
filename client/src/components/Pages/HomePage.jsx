@@ -1,59 +1,35 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from "../../context/socket";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import socketio from "socket.io-client";
+import { query, collection, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+
+socketio.connect("ws://localhost:4000");
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [
-    isButtonCallSalesConsultantDisabled,
-    setIsButtonCallSalesConsultantDisabled,
-  ] = useState(true);
-  const socket = useContext(SocketContext);
+  // const socket = useContext(SocketContext);
   const [user, loading] = useAuthState(auth);
-  const [username, setUsername] = useState("");
 
   // Get all rooms available from firebase
   const [allRooms, setAllRooms] = useState([]);
   const fetchAllRooms = useCallback(async () => {
-    try {
-      const q = query(collection(db, "rooms"));
-      const doc = await getDocs(q);
-      setAllRooms(doc.docs.map((doc) => doc.data()));
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
-    // todo: remove this line
-    setIsButtonCallSalesConsultantDisabled(true);
+    const q = query(collection(db, "rooms"));
+    const doc = await getDocs(q);
+    setAllRooms(doc.docs.map((doc) => doc.data()));
   }, []);
 
   const handleSubmitAskSeller = (e) => {
     e.preventDefault();
-    socket.emit("newUser", { username, socketID: socket.id });
-    navigate("/seller");
+    navigate("/help2");
   };
-
-  const fetchUsername = useCallback(async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setUsername(data.name);
-    } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
-    }
-  }, [user]);
 
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/login");
-    fetchUsername();
     fetchAllRooms();
-  }, [user, loading, fetchUsername, navigate, fetchAllRooms]);
+  }, [user, loading, navigate, fetchAllRooms]);
 
   return (
     <div className="home__container">
@@ -74,15 +50,7 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
-        <button
-          className={
-            isButtonCallSalesConsultantDisabled
-              ? "home__cta__disabled"
-              : "home__cta"
-          }
-          disabled={isButtonCallSalesConsultantDisabled}
-          onClick={handleSubmitAskSeller}
-        >
+        <button className={"home__cta"} onClick={handleSubmitAskSeller}>
           DEMANDE CONSEILLER
         </button>
       </div>

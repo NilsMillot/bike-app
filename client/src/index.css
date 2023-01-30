@@ -320,3 +320,8 @@ font-size: 15px;
 .list_rooms li {
   margin: 10px;
 }
+
+.help-left-panel {
+  background: gray;
+  width: 260px;
+}

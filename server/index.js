@@ -15,21 +15,6 @@ const eventEmitter = new EventEmitter();
 app.use(express.json());
 app.use(cors());
 
-// TODO: add auth middleware
-// Here is a middleware function that will be called for every request
-// socketIO.use((socket, next) => {
-//   const username = socket.handshake.auth;
-//   if (!username) {
-//     return next(new Error("invalid username"));
-//   }
-//   socket.username = username;
-//   next();
-// });
-
-// For this, only set socket.auth when the user selects a username
-//   socket.auth = { username }
-//   socket.connect()
-
 const { addUser, removeUser, usersArr } = require("./user");
 const {
   addAvailableSeller,
@@ -84,25 +69,6 @@ socketIO.on("connection", (socket) => {
       users: usersArr,
     });
     console.log("A disconnection has been made");
-  });
-});
-
-socketIO.of("/seller").on("connection", (socket) => {
-  socket.on("joinAvailableSellers", ({ nameSeller }, callBack) => {
-    const { error } = addAvailableSeller({
-      id: socket.id,
-      nameSeller,
-    });
-    if (error) return callBack(error);
-  });
-  socket.on("getAvailableSellers", () => {
-    socketIO.of("/seller").emit("availableSellers", {
-      availableSellers,
-    });
-  });
-  socket.on("disconnect", () => {
-    removeAvailableSeller(socket.id);
-    console.log("A seller disconnection has been made");
   });
 });
 
