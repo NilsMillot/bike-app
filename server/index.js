@@ -17,14 +17,27 @@ app.use(cors());
 
 // TODO: add auth middleware
 // Here is a middleware function that will be called for every request
-socketIO.use(function (socket, next) {
-  next();
-});
+// socketIO.use((socket, next) => {
+//   const username = socket.handshake.auth;
+//   if (!username) {
+//     return next(new Error("invalid username"));
+//   }
+//   socket.username = username;
+//   next();
+// });
+
+// For this, only set socket.auth when the user selects a username
+//   socket.auth = { username }
+//   socket.connect()
 
 const { addUser, removeUser, usersArr } = require("./user");
+const {
+  addAvailableSeller,
+  removeAvailableSeller,
+  availableSellers,
+} = require("./seller");
 
 socketIO.on("connection", (socket) => {
-  // TODO: Pass maxUsers from firebase here and check if there is too many users in the room
   socket.on("join", ({ name, room, maxUsers }, callBack) => {
     const { user, error } = addUser({ id: socket.id, name, room, maxUsers });
 
@@ -71,6 +84,25 @@ socketIO.on("connection", (socket) => {
       users: usersArr,
     });
     console.log("A disconnection has been made");
+  });
+});
+
+socketIO.of("/seller").on("connection", (socket) => {
+  socket.on("joinAvailableSellers", ({ nameSeller }, callBack) => {
+    const { error } = addAvailableSeller({
+      id: socket.id,
+      nameSeller,
+    });
+    if (error) return callBack(error);
+  });
+  socket.on("getAvailableSellers", () => {
+    socketIO.of("/seller").emit("availableSellers", {
+      availableSellers,
+    });
+  });
+  socket.on("disconnect", () => {
+    removeAvailableSeller(socket.id);
+    console.log("A seller disconnection has been made");
   });
 });
 

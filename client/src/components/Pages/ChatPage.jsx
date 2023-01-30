@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import ChatBar from "./ChatBar";
-import ChatBody from "./ChatBody";
-import ChatFooter from "./ChatFooter";
-import { auth, db } from "../firebase";
+import ChatBar from "../ChatBar";
+import ChatBody from "../ChatBody";
+import ChatFooter from "../ChatFooter";
+import { auth, db } from "../../firebase";
 import io from "socket.io-client";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { collection, getDocs, query } from "firebase/firestore";
@@ -96,11 +96,10 @@ const ChatPage = () => {
   if (loading) return <div>Loading...</div>;
   if (!user) return <div>Not logged in</div>;
 
-  if (!room) {
-    return <div>Not autorised</div>;
-  }
-
-  if (!autorisedRooms.find((room) => room.name === searchParams.get("room"))) {
+  if (
+    !room ||
+    !autorisedRooms.find((room) => room.name === searchParams.get("room"))
+  ) {
     return <div>Not autorised</div>;
   }
 

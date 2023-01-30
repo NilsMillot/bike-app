@@ -1,15 +1,16 @@
 import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import ChatPage from "./components/ChatPage";
-import LoginPage from "./components/LoginPage";
-import ResetPage from "./components/ResetPage";
-import DashboardPage from "./components/DashboardPage";
-import RegisterPage from "./components/RegisterPage";
+import HomePage from "./components/Pages/HomePage";
+import ChatPage from "./components/Pages/ChatPage";
+import LoginPage from "./components/Pages/LoginPage";
+import ResetPage from "./components/Pages/ResetPage";
+import DashboardPage from "./components/Pages/DashboardPage";
+import RegisterPage from "./components/Pages/RegisterPage";
 import Navbar from "./components/Navbar";
-import AdminPage from "./components/AdminPage";
-import SellerPage from "./components/SellerPage";
+import AdminPage from "./components/Pages/AdminPage";
+import SellerPage from "./components/Pages/SellerPage";
 import Notification from "./components/Notification";
+import HelpPage2 from "./components/Pages/HelpPage2";
 
 // IF WE WANT TO USE PROVIDER
 // import { socket, SocketContext } from "./context/socket";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/seller" element={<SellerPage />} />
+        <Route path="/help2" element={<HelpPage2 />} />
       </Routes>
       {/* </SocketContext.Provider> */}
       <Notification />

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, signInWithGoogle, logInWithEmailAndPassword } from "../firebase";
+import {
+  auth,
+  signInWithGoogle,
+  logInWithEmailAndPassword,
+} from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "../index.css";
+import "../../index.css";
 
 function LoginPage() {
   const [email, setEmail] = useState("");

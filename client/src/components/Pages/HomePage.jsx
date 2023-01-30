@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from "../context/socket";
+import { SocketContext } from "../../context/socket";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 
 const HomePage = () => {
   const navigate = useNavigate();

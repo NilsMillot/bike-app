@@ -11,7 +11,7 @@ import {
   setDoc,
   addDoc,
 } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db } from "../../firebase";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -83,10 +83,10 @@ const AdminPage = () => {
 
   // Check if user has admin role
   useEffect(() => {
-    if (isCurrentUserDatasFetched && !currentUserRoles?.includes("admin")) {
+    if (isCurrentUserDatasFetched && !currentUserRoles?.includes("ADMIN")) {
       navigate("/");
     }
-    if (isCurrentUserDatasFetched && currentUserRoles?.includes("admin")) {
+    if (isCurrentUserDatasFetched && currentUserRoles?.includes("ADMIN")) {
       fetchAllUsersDatas();
       fetchAllRooms();
     }
@@ -205,9 +205,9 @@ const AdminPage = () => {
                 <td>{user.email}</td>
                 {/* TODO: display roles as checkboxes */}
                 <td>
-                  {user?.roles?.map((role) => {
+                  {/* {user?.roles?.map((role) => {
                     return role + " ";
-                  })}
+                  })} */}
                 </td>
               </tr>
             );
