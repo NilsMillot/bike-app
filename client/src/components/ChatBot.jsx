@@ -154,9 +154,9 @@ function Chatbot() {
   }, {
     id: '16',
     options: [
-      { value: 1, label: 'Usage routier', trigger: '17' },
-      { value: 2, label: 'Usage tout-terrain', trigger: '18' },
-      { value: 3, label: 'Usage sportif', trigger: '19' }
+      { value: 1, label: 'Usage routier', trigger: '22' },
+      { value: 2, label: 'Usage tout-terrain', trigger: '23' },
+      { value: 3, label: 'Usage sportif', trigger: '24' }
     ]
   }, {
     id: '17',
@@ -170,14 +170,34 @@ function Chatbot() {
   }, {
     id: '20',
     options: [
-      { value: 1, label: 'Mail', end: true },
-      { value: 2, label: 'Téléphone', end: true}
+      { value: 1, label: 'Email', trigger: '25' },
+      { value: 2, label: 'Téléphone', trigger: '26'}
     ]
   }, {
     id: '21',
     message: "Veuillez choisir une date de RDV:",
     trigger: "8"
-  }
+  }, {
+      id: '22',
+      message: "Veuillez choisir une date de RDV:",
+      trigger: "17"
+  }, {
+    id: '23',
+    message: "Veuillez choisir une date de RDV:",
+    trigger: "18"
+} , {
+  id: '24',
+  message: "Veuillez choisir une date de RDV:",
+  trigger: "19"
+} , {
+  id: '25',
+  message: "mail@contact.fr",
+  end: true
+} , {
+  id: '26',
+  message: "+33654234576",
+  end: true
+}
 
 ];
 
