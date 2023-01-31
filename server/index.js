@@ -58,6 +58,13 @@ socketIO.on("connection", (socket) => {
       });
     });
   });
+  // private message
+  socket.on("privateMessage", ({ message, to }) => {
+    socketIO.to(to).emit("privateMessage", {
+      user: socket.id,
+      text: message,
+    });
+  });
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
     socketIO.to(user?.room).emit("message", {
