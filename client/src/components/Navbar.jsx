@@ -39,11 +39,11 @@ function NavbarApp() {
         <Container>
           <Navbar.Brand href="/">
             <img
-              src={logo}
+              src="hornet-target.png"
               width="30"
               height="30"
               className="d-inline-block align-top"
-              alt="logo"
+              alt="logo brand"
             />
           </Navbar.Brand>
           {user && (

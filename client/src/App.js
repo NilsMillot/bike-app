@@ -28,6 +28,20 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/seller" element={<SellerPage />} />
         <Route path="/help" element={<HelpPage />} />
+        <Route
+          path="*"
+          element={
+            <h1
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "100px",
+              }}
+            >
+              404 not found 🫡
+            </h1>
+          }
+        />
       </Routes>
       <Notification />
     </Fragment>

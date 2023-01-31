@@ -33,6 +33,7 @@ const HomePage = () => {
 
   return (
     <div className="home__container">
+      <img src="hornet.png" alt="hornet" style={{ width: "360px" }} />
       <div>
         <h1>Liste des salons ouverts</h1>
         <ul className={"list_rooms"}>
