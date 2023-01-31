@@ -22,7 +22,7 @@ const HomePage = () => {
 
   const handleSubmitAskSeller = (e) => {
     e.preventDefault();
-    navigate("/help2");
+    navigate("/help");
   };
 
   useEffect(() => {
