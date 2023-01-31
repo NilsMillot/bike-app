@@ -17,8 +17,9 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [currentUserRoles, setCurrentUserRoles] = useState([]);
-  const [isCurrentUserDatasFetched, setIsCurrentUserDatasFetched] =
-    useState(false);
+  const [isCurrentUserDatasFetched, setIsCurrentUserDatasFetched] = useState(
+    false
+  );
   const [allUsers, setAllUsers] = useState([]);
   const [allRooms, setAllRooms] = useState([]);
 
@@ -244,7 +245,7 @@ const AdminPage = () => {
                   )}
                 </td>
                 <td>
-                  {roomModified === room ? (
+                  {/* {roomModified === room ? (
                     <>
                       <input
                         type="number"
@@ -277,7 +278,7 @@ const AdminPage = () => {
                         modify
                       </button>
                     </>
-                  )}
+                  )} */}
                   <button
                     onClick={() => {
                       deleteRoomDoc(room.name);
