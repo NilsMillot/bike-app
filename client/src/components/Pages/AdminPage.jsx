@@ -248,7 +248,7 @@ const AdminPage = () => {
                   )}
                 </td>
                 <td>
-                  {roomModified === room ? (
+                  {/* {roomModified === room ? (
                     <>
                       <input
                         type="number"
@@ -281,7 +281,7 @@ const AdminPage = () => {
                         modify
                       </button>
                     </>
-                  )}
+                  )} */}
                   <button
                     onClick={() => {
                       deleteRoomDoc(room.name);
