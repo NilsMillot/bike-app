@@ -11,12 +11,14 @@ import AdminPage from "./components/Pages/AdminPage";
 import SellerPage from "./components/Pages/SellerPage";
 import Notification from "./components/Notification";
 import HelpPage2 from "./components/Pages/HelpPage2";
+import Chatbot from "./components/ChatBot";
 import HelpPage from "./components/Pages/HelpPage";
 
 function App() {
   return (
     <Fragment>
       <Navbar />
+      <Chatbot/>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
