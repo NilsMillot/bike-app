@@ -9,32 +9,28 @@ import RegisterPage from "./components/Pages/RegisterPage";
 import Navbar from "./components/Navbar";
 import AdminPage from "./components/Pages/AdminPage";
 import SellerPage from "./components/Pages/SellerPage";
-import { socket, SocketContext } from "./context/socket";
+import Notification from "./components/Notification";
+import HelpPage2 from "./components/Pages/HelpPage2";
 import Chatbot from "./components/ChatBot";
-
-// Print errors if there is some
-socket.on("connect_error", (err) => {
-  console.log(err instanceof Error); // true
-});
 
 function App() {
   return (
-      <Fragment>
-        <Navbar/>
-        <Chatbot/>
-        <SocketContext.Provider value={socket}>
-          <Routes>
-              <Route path="/login" element={<LoginPage />}/>
-              <Route path="/register" element={<RegisterPage />}/>
-              <Route path="/reset" element={<ResetPage />}/>
-              <Route path="/" element={<HomePage />}/>
-              <Route path="/chat" element={<ChatPage />}/>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="/seller" element={<SellerPage />} />
-          </Routes>
-        </SocketContext.Provider>
-      </Fragment>
+    <Fragment>
+      <Navbar />
+      <Chatbot/>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/reset" element={<ResetPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/seller" element={<SellerPage />} />
+        <Route path="/help2" element={<HelpPage2 />} />
+      </Routes>
+      <Notification />
+    </Fragment>
   );
 }
 

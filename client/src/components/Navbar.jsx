@@ -28,16 +28,10 @@ function NavbarApp() {
   }, [user]);
 
   useEffect(() => {
-<<<<<<< HEAD
     if (user) {
       fetchUsername();
     }
   }, [user, fetchUsername]);
-=======
-    if (loading) return;
-    if (user) fetchUsername();
-  }, [user, loading, fetchUsername, navigate]);
->>>>>>> chatbot
 
   return (
     <>
