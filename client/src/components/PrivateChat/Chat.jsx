@@ -12,7 +12,10 @@ const Chat = () => {
       setUsers((current) => {
         const currentUsers = current.map((user) => {
           if (user.self) {
-            return { ...user, connected: true };
+            return {
+              ...user,
+              connected: true,
+            };
           }
           return user;
         });
@@ -126,7 +129,7 @@ const Chat = () => {
   };
 
   return (
-    <div>
+    <div className="private-chat">
       <div className="left-panel">
         {users.map((user) => (
           <User

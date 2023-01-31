@@ -46,8 +46,12 @@ const MessagePanel = ({ user, onInput }) => {
           placeholder="Your message..."
           className="input"
         />
-        <button disabled={!isValid} className="send-button">
-          Send
+        <button
+          style={{ verticalAlign: "top", marginLeft: "10px" }}
+          disabled={!isValid}
+          className="sendBtn"
+        >
+          ENVOYER
         </button>
       </form>
     </div>

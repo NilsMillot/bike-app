@@ -105,10 +105,12 @@ const io = require("socket.io")(httpServer, {
 
 io.use((socket, next) => {
   const username = socket.handshake.auth.username;
+  const isSeller = socket.handshake.auth.isSeller;
   if (!username) {
     return next(new Error("invalid username"));
   }
   socket.username = username;
+  socket.isSeller = isSeller;
   next();
 });
 
@@ -119,6 +121,7 @@ io.on("connection", (socket) => {
     users.push({
       userID: id,
       username: socket.username,
+      isSeller: socket.isSeller,
     });
   }
   socket.emit("users", users);
