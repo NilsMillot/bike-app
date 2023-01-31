@@ -314,12 +314,7 @@ font-size: 15px;
 }
 
 .list_rooms li {
-  margin: 10px;
-}
-
-.help-left-panel {
-  background: gray;
-  width: 260px;
+  margin: 10px 0;
 }
 
 /* Component chatbot */
@@ -374,9 +369,6 @@ font-size: 15px;
   margin: 200px auto 0;
 }
 
-.right-panel {
-  margin-left: 260px;
-}
 .selected {
   background-color: #1164a3;
 }
@@ -426,6 +418,17 @@ font-size: 15px;
   border-radius: 5px;
   border: 1px solid #000;
 }
-.send-button {
-  vertical-align: top;
+
+.private-chat {
+  display: flex;
+}
+
+.left-panel {
+  height: 94vh;
+  background-color: #F9F5EB;
+  width: 280px;
+}
+
+.right-panel {
+  width: 100%;
 }
