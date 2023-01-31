@@ -16,11 +16,6 @@ app.use(express.json());
 app.use(cors());
 
 const { addUser, removeUser, usersArr } = require("./user");
-const {
-  addAvailableSeller,
-  removeAvailableSeller,
-  availableSellers,
-} = require("./seller");
 
 socketIO.on("connection", (socket) => {
   socket.on("join", ({ name, room, maxUsers }, callBack) => {
@@ -98,3 +93,58 @@ app.post("/api/send-notif", (req, res) => {
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+// Private chat server
+
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.use((socket, next) => {
+  const username = socket.handshake.auth.username;
+  if (!username) {
+    return next(new Error("invalid username"));
+  }
+  socket.username = username;
+  next();
+});
+
+io.on("connection", (socket) => {
+  // fetch existing users
+  const users = [];
+  for (let [id, socket] of io.of("/").sockets) {
+    users.push({
+      userID: id,
+      username: socket.username,
+    });
+  }
+  socket.emit("users", users);
+
+  // notify existing users
+  socket.broadcast.emit("user connected", {
+    userID: socket.id,
+    username: socket.username,
+  });
+
+  // forward the private message to the right recipient
+  socket.on("private message", ({ content, to }) => {
+    socket.to(to).emit("private message", {
+      content,
+      from: socket.id,
+    });
+  });
+
+  // notify users upon disconnection
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("user disconnected", socket.id);
+  });
+});
+
+const PORT_PRIVATE_CHAT = 4001;
+
+httpServer.listen(PORT_PRIVATE_CHAT, () =>
+  console.log(`server listening at http://localhost:${PORT_PRIVATE_CHAT}`)
+);

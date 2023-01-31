@@ -83,10 +83,10 @@ const AdminPage = () => {
 
   // Check if user has admin role
   useEffect(() => {
-    if (isCurrentUserDatasFetched && !currentUserRoles?.includes("ADMIN")) {
+    if (isCurrentUserDatasFetched && !currentUserRoles?.includes("admin")) {
       navigate("/");
     }
-    if (isCurrentUserDatasFetched && currentUserRoles?.includes("ADMIN")) {
+    if (isCurrentUserDatasFetched && currentUserRoles?.includes("admin")) {
       fetchAllUsersDatas();
       fetchAllRooms();
     }

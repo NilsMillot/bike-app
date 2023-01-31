@@ -12,6 +12,7 @@ import SellerPage from "./components/Pages/SellerPage";
 import Notification from "./components/Notification";
 import HelpPage2 from "./components/Pages/HelpPage2";
 import Chatbot from "./components/ChatBot";
+import HelpPage from "./components/Pages/HelpPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/seller" element={<SellerPage />} />
         <Route path="/help2" element={<HelpPage2 />} />
+        <Route path="/help" element={<HelpPage />} />
       </Routes>
       <Notification />
     </Fragment>
