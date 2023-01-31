@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import User from "./User";
 import MessagePanel from "./MessagePanel";
 import socket from "../../socket";
+import socketio from "socket.io-client";
+
+// Just for receiving short messages from sellers here too
+socketio.connect("ws://localhost:4000");
 
 const Chat = () => {
   const [selectedUser, setSelectedUser] = useState(null);

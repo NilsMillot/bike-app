@@ -37,21 +37,27 @@ const HomePage = () => {
         <h1>Liste des salons ouverts</h1>
         <ul className={"list_rooms"}>
           {allRooms.map((room, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
               <button
                 className={"home__cta"}
                 onClick={() => {
                   navigate("/chat?room=" + room.name);
                 }}
-                style={{ marginRight: "10px" }}
               >
                 {room.name}
               </button>
             </li>
           ))}
         </ul>
-        <button className={"home__cta"} onClick={handleSubmitAskSeller}>
-          DEMANDE CONSEILLER
+        <button
+          className={"home__cta"}
+          style={{ width: "100%" }}
+          onClick={handleSubmitAskSeller}
+        >
+          CHAT AVEC UN VENDEUR (ou d'autres passionnés motorisés) !
         </button>
       </div>
     </div>

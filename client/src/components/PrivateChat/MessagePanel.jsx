@@ -40,7 +40,8 @@ const MessagePanel = ({ user, onInput }) => {
       </ul>
 
       <form onSubmit={onSubmit} style={{ padding: "10px" }}>
-        <textarea
+        <input
+          type="text"
           value={input}
           onChange={(event) => setInput(event.target.value)}
           placeholder="Your message..."
